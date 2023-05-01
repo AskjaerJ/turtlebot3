@@ -91,7 +91,6 @@ class Obstacle():
         bus.write_byte_data(0x44, 0x01, 0x05)
 
         # function for turning
-
         def turn(min_left, min_right, turn_value):
             if min_right < min_left:
                 twist.angular.z = turn_value  # left
