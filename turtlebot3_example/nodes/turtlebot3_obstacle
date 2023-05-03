@@ -119,8 +119,11 @@ class Obstacle():
                     turn(min_distance_left, min_distance_right, 2)
                 else:
                     rospy.loginfo('Below 20')
-                    turn(min_distance_left, min_distance_right, 3)
-                    time.sleep(3)
+                    twist.angular.z = 3  # left
+                    self._cmd_pub.publish(twist)
+                    rospy.loginfo('Turn left!')
+                    #turn(min_distance_left, min_distance_right, 3)
+                    #time.sleep(3)
 
             else:
                 twist.linear.x = LINEAR_VEL
