@@ -22,7 +22,7 @@ import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 import time  # time module
-import smbus  # led sensor
+#import smbus  # led sensor
 
 LINEAR_VEL = 0.22
 STOP_DISTANCE = 0.50
@@ -83,12 +83,12 @@ class Obstacle():
 
         # LED
         # Get I2C bus
-        bus = smbus.SMBus(1)
+        #bus = smbus.SMBus(1)
 
         # ISL29125 address, 0x44(68)
         # Select configuation-1register, 0x01(01)
         # 0x0D(13) Operation: RGB, Range: 360 lux, Res: 16 Bits
-        bus.write_byte_data(0x44, 0x01, 0x05)
+        #bus.write_byte_data(0x44, 0x01, 0x05)
 
         # function for turning
         def turn(min_left, min_right, turn_value):
@@ -138,17 +138,17 @@ class Obstacle():
             speed_accumulation = speed_accumulation + twist.linear.x
 
             # read LED data
-            data = bus.read_i2c_block_data(0x44, 0x09, 6)
+            #data = bus.read_i2c_block_data(0x44, 0x09, 6)
 
             # Convert the data to green, red and blue int values
             # Insert code here
-            green = 256*data[1] + data[0]
-            red = 256*data[3] + data[2]
-            blue = 256*data[5] + data[4]
+            #green = 256*data[1] + data[0]
+            #red = 256*data[3] + data[2]
+            #blue = 256*data[5] + data[4]
 
             # count red
-            if red > green and red > blue:  # red
-                red_count = red_count + 1
+            #if red > green and red > blue:  # red
+            #    red_count = red_count + 1
 
         rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
         rospy.loginfo('collision count : %f', collision_count)
