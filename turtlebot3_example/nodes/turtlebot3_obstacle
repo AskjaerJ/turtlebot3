@@ -22,7 +22,7 @@ import math
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 import time  # time module
-import smbus  # led sensor
+# import smbus  # led sensor
 
 LINEAR_VEL = 0.22
 STOP_DISTANCE = 0.50
