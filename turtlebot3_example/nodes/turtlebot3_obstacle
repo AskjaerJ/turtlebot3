@@ -16,6 +16,7 @@
 #################################################################################
 
 # Authors: Gilbert #
+launch-prefix=sudo
 
 import rospy
 import math
@@ -29,6 +30,7 @@ STOP_DISTANCE = 0.50
 LIDAR_ERROR = 0.05
 ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
+
 
 
 class Obstacle():
