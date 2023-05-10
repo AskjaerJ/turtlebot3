@@ -24,6 +24,8 @@ class Victim():
         # 0x0D(13) Operation: RGB, Range: 360 lux, Res: 16 Bits
         bus.write_byte_data(0x44, 0x01, 0x05)
         
+        red_count = 0
+        
         t_end = time.time() + 120  # time_time returns time since 1st jan 1970
         
         while time.time() < t_end:
