@@ -37,12 +37,15 @@ SUM = 0
 COUNT = 0
 
 # odom subscriber callback
+
+
 def odometryCallback(data):
-    #retrieve velocity here
-    #COUNT = COUNT + 1
-    #SUM = SUM + data.twist.twist.linear.x
-    #average_linear_speed = SUM/COUNT
+    # retrieve velocity here
+    # COUNT = COUNT + 1
+    # SUM = SUM + data.twist.twist.linear.x
+    # average_linear_speed = SUM/COUNT
     rospy.loginfo('velocity : %f', data.twist.twist.linear.x)
+
 
 class Obstacle():
 
@@ -84,7 +87,6 @@ class Obstacle():
                 scan_filter[i] = 3.5
 
         return scan_filter
-   
 
     def obstacle(self):
         twist = Twist()
@@ -94,7 +96,6 @@ class Obstacle():
         speed_accumulation = 0  # for average speed
         collision_count = 0  # collision counter
         red_count = 0
-     
 
         # LED
         # Get I2C bus
@@ -126,14 +127,14 @@ class Obstacle():
 
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
                 if min_distance_center > 0.40:  # dist between 55 and 35
-                    rospy.loginfo('Between 55 and 40')
+                    # rospy.loginfo('Between 55 and 40')
                     turn(min_distance_left, min_distance_right, 1)
 
                 elif min_distance_center > 0.25:  # dist between 35 and 20
-                    rospy.loginfo('Between 40 and 25')
+                    # rospy.loginfo('Between 40 and 25')
                     turn(min_distance_left, min_distance_right, 2)
                 else:
-                    rospy.loginfo('Below 20')
+                    # rospy.loginfo('Below 20')
                     twist.linear.x = 0  # stop
                     twist.angular.z = 4  # left
                     self._cmd_pub.publish(twist)
@@ -146,8 +147,8 @@ class Obstacle():
                 twist.angular.z = 0.0
                 self._cmd_pub.publish(twist)
                 turtlebot_moving = True
-                rospy.loginfo('Distance of the obstacle : %f',
-                              min_distance_center)
+                # rospy.loginfo('Distance of the obstacle : %f',
+                #               min_distance_center)
 
             # collision
             if min_distance_center <= 0.4 or min_distance_left <= 0.5 or min_distance_right <= 0.5:
@@ -167,8 +168,9 @@ class Obstacle():
             # count red
             if red > green and red > blue:  # red
                 red_count = red_count + 1
+                rospy.loginfo('VICTIM!, new victim count : %f', red_count)
 
-        #rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
+        # rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
         rospy.loginfo('collision count : %f', collision_count)
         rospy.loginfo('victim count : %f', red_count)
 
