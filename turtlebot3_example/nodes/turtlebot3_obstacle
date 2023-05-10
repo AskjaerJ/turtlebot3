@@ -74,7 +74,8 @@ class Obstacle():
         return scan_filter
 
     # odom global variables
-    SUM, COUNT = 0
+    SUM = 0
+    COUNT = 0
 
     # odom subscriber callback
     def odometryCallback(data):
