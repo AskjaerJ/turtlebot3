@@ -158,21 +158,21 @@ class Obstacle():
             # speed_accumulation = speed_accumulation + twist.linear.x
 
             # read LED data
-            data = bus.read_i2c_block_data(0x44, 0x09, 6)
+            #data = bus.read_i2c_block_data(0x44, 0x09, 6)
 
             # Convert the data to green, red and blue int values
-            green = 256*data[1] + data[0]
-            red = 256*data[3] + data[2]
-            blue = 256*data[5] + data[4]
+            # green = 256*data[1] + data[0]
+            # red = 256*data[3] + data[2]
+            # blue = 256*data[5] + data[4]
 
             # count red
-            if red > green and red > blue:  # red
-                red_count = red_count + 1
-                rospy.loginfo('VICTIM!, new victim count : %f', red_count)
+            # if red > green and red > blue:  # red
+            #     red_count = red_count + 1
+            #     rospy.loginfo('VICTIM!, new victim count : %f', red_count)
                 
         # rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
         rospy.loginfo('collision count : %f', collision_count)
-        rospy.loginfo('victim count : %f', red_count)
+        # rospy.loginfo('victim count : %f', red_count)
 
 
 def main():
