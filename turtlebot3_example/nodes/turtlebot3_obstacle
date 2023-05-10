@@ -138,7 +138,7 @@ class Obstacle():
                     twist.linear.x = 0  # stop
                     twist.angular.z = 4  # left
                     self._cmd_pub.publish(twist)
-                    rospy.loginfo('Turn left!')
+                    # rospy.loginfo('Turn left!')
                     # turn(min_distance_left, min_distance_right, 3)
                     # time.sleep(3)
 
