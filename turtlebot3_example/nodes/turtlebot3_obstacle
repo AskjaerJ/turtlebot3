@@ -111,11 +111,11 @@ class Obstacle():
             if min_right < min_left:
                 twist.angular.z = turn_value  # left
                 self._cmd_pub.publish(twist)
-                rospy.loginfo('Turn left!')
+                #rospy.loginfo('Turn left!')
             else:  # min_distance_left < min_distance_right
                 twist.angular.z = -turn_value  # right
                 self._cmd_pub.publish(twist)
-                rospy.loginfo('Turn right!')
+                #rospy.loginfo('Turn right!')
 
         # runtime loopet
         while time.time() < t_end:  # runs for X secs
