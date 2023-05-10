@@ -169,7 +169,7 @@ class Obstacle():
             if red > green and red > blue:  # red
                 rospy.loginfo('VICTIM!, new victim count : %f', red_count)
                 red_count = red_count + 1
-                for i in range(2000):
+                for i in range(8):
                     time.sleep(0.25) # to stop double or triple counts of same mark
                 
 
