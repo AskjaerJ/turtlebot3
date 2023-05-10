@@ -32,6 +32,18 @@ ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
 
 
+# odom global variables
+SUM = 0
+COUNT = 0
+
+# odom subscriber callback
+def odometryCallback(data):
+    #retrieve velocity here
+    COUNT += 1
+    SUM += data.twist.twist.linear.x
+    average_linear_speed = SUM/COUNT
+    rospy.loginfo(average_linear_speed)
+
 class Obstacle():
 
     def __init__(self):
@@ -72,18 +84,7 @@ class Obstacle():
                 scan_filter[i] = 3.5
 
         return scan_filter
-
-    # odom global variables
-    SUM = 0
-    COUNT = 0
-
-    # odom subscriber callback
-    def odometryCallback(data):
-        #retrieve velocity here
-        COUNT += 1
-        SUM += data.twist.twist.linear.x
-        average_linear_speed = SUM/COUNT
-        rospy.loginfo(average_linear_speed)
+   
 
     def obstacle(self):
         twist = Twist()
