@@ -39,10 +39,10 @@ COUNT = 0
 # odom subscriber callback
 def odometryCallback(data):
     #retrieve velocity here
-    COUNT += 1
-    SUM += data.twist.twist.linear.x
+    COUNT = COUNT + 1
+    SUM = SUM + data.twist.twist.linear.x
     average_linear_speed = SUM/COUNT
-    rospy.loginfo(average_linear_speed)
+    rospy.loginfo('average velocity : %f', average_linear_speed)
 
 class Obstacle():
 
