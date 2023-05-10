@@ -14,7 +14,7 @@ class Victim():
     def __init__(self):
         self.check_for_victim()
         
-    def check_for_victim():
+    def check_for_victim(self):
         # LED
         # Get I2C bus
         bus = smbus.SMBus(1)
