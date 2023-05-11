@@ -132,8 +132,8 @@ class Obstacle():
                     rospy.loginfo('Between 50 and 35')
                     turn(min_distance_left, min_distance_right, 0.8)
 
-                elif min_distance_center > 0.23:  # range 1
-                    rospy.loginfo('Between 35 and 22')
+                elif min_distance_center > 0.24:  # range 1
+                    rospy.loginfo('Between 35 and 24')
                     turn(min_distance_left, min_distance_right, 1.6)
                 else: # range 0
                     rospy.loginfo('Below 23')
