@@ -26,7 +26,7 @@ import smbus  # led sensor
 from nav_msgs.msg import Odometry  # odom
 
 LINEAR_VEL = 0.22
-STOP_DISTANCE = 0.50
+STOP_DISTANCE = 0.45
 LIDAR_ERROR = 0.05
 ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
