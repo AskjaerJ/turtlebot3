@@ -45,6 +45,7 @@ def odometryCallback(data):
     # SUM = SUM + data.twist.twist.linear.x
     # average_linear_speed = SUM/COUNT
     #rospy.loginfo('velocity : %f', data.twist.twist.linear.x)
+    pass
 
 
 class Obstacle():
@@ -106,7 +107,7 @@ class Obstacle():
         # 0x0D(13) Operation: RGB, Range: 360 lux, Res: 16 Bits
         bus.write_byte_data(0x44, 0x01, 0x05)
 
-        # function for turning
+            # function for turning
         def turn(min_left, min_right, turn_value):
             if min_right < min_left:
                 twist.angular.z = turn_value  # left
@@ -150,26 +151,26 @@ class Obstacle():
                 # rospy.loginfo('Distance of the obstacle : %f',
                 #               min_distance_center)
 
-            # collision
-            if min_distance_center <= 0.4 or min_distance_left <= 0.5 or min_distance_right <= 0.5:
-                collision_count = collision_count + 1
+        # collision
+        if min_distance_center <= 0.04 or min_distance_left <= 0.05 or min_distance_right <= 0.05:
+            collision_count = collision_count + 1
 
-            # speed_updates = speed_updates + 1
-            # speed_accumulation = speed_accumulation + twist.linear.x
+        # speed_updates = speed_updates + 1
+        # speed_accumulation = speed_accumulation + twist.linear.x
 
-            # read LED data
-            #data = bus.read_i2c_block_data(0x44, 0x09, 6)
+        # read LED data
+        #data = bus.read_i2c_block_data(0x44, 0x09, 6)
 
-            # Convert the data to green, red and blue int values
-            # green = 256*data[1] + data[0]
-            # red = 256*data[3] + data[2]
-            # blue = 256*data[5] + data[4]
+        # Convert the data to green, red and blue int values
+        # green = 256*data[1] + data[0]
+        # red = 256*data[3] + data[2]
+        # blue = 256*data[5] + data[4]
 
-            # count red
-            # if red > green and red > blue:  # red
-            #     red_count = red_count + 1
-            #     rospy.loginfo('VICTIM!, new victim count : %f', red_count)
-                
+        # count red
+        # if red > green and red > blue:  # red
+        #     red_count = red_count + 1
+        #     rospy.loginfo('VICTIM!, new victim count : %f', red_count)
+
         # rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
         rospy.loginfo('collision count : %f', collision_count)
         # rospy.loginfo('victim count : %f', red_count)
