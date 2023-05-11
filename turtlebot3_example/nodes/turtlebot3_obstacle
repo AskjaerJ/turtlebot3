@@ -98,6 +98,7 @@ class Obstacle():
         collision_count = 0  # collision counter
         red_count = 0
         full_stop_turn_count = 0
+        twist.linear.x = LINEAR_VEL
 
         # LED
         # Get I2C bus
