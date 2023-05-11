@@ -44,7 +44,7 @@ def odometryCallback(data):
     # COUNT = COUNT + 1
     # SUM = SUM + data.twist.twist.linear.x
     # average_linear_speed = SUM/COUNT
-    rospy.loginfo('velocity : %f', data.twist.twist.linear.x)
+    #rospy.loginfo('velocity : %f', data.twist.twist.linear.x)
 
 
 class Obstacle():
@@ -127,14 +127,14 @@ class Obstacle():
 
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
                 if min_distance_center > 0.40:  # dist between 55 and 35
-                    # rospy.loginfo('Between 55 and 40')
-                    turn(min_distance_left, min_distance_right, 1)
+                    rospy.loginfo('Between 55 and 40')
+                    turn(min_distance_left, min_distance_right, 0.8)
 
                 elif min_distance_center > 0.25:  # dist between 35 and 20
-                    # rospy.loginfo('Between 40 and 25')
+                    rospy.loginfo('Between 40 and 25')
                     turn(min_distance_left, min_distance_right, 2)
                 else:
-                    # rospy.loginfo('Below 20')
+                    rospy.loginfo('Below 20')
                     twist.linear.x = 0  # stop
                     twist.angular.z = 4  # left
                     self._cmd_pub.publish(twist)
