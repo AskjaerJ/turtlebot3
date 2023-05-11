@@ -97,6 +97,7 @@ class Obstacle():
         speed_accumulation = 0  # for average speed
         collision_count = 0  # collision counter
         red_count = 0
+        full_stop_turn_count = 0
 
         # LED
         # Get I2C bus
@@ -127,18 +128,19 @@ class Obstacle():
             min_distance_left = min(lidar_distances[60:89])
 
             if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
-                if min_distance_center > 0.40:  # dist between 55 and 35
-                    rospy.loginfo('Between 55 and 40')
+                if min_distance_center > 0.35:  #range 2
+                    rospy.loginfo('Between 50 and 35')
                     turn(min_distance_left, min_distance_right, 0.8)
 
-                elif min_distance_center > 0.20:  # dist between 35 and 20
-                    rospy.loginfo('Between 40 and 25')
-                    turn(min_distance_left, min_distance_right, 1.5)
-                else:
-                    rospy.loginfo('Below 20')
+                elif min_distance_center > 0.22:  # range 1
+                    rospy.loginfo('Between 35 and 22')
+                    turn(min_distance_left, min_distance_right, 1.6)
+                else: # range 0
+                    rospy.loginfo('Below 22')
                     twist.linear.x = 0  # stop
                     twist.angular.z = 4  # left
                     self._cmd_pub.publish(twist)
+                    full_stop_turn_count = full_stop_turn_count + 1
                     # rospy.loginfo('Turn left!')
                     # turn(min_distance_left, min_distance_right, 3)
                     # time.sleep(3)
@@ -155,25 +157,9 @@ class Obstacle():
         if min_distance_center <= 0.04 or min_distance_left <= 0.05 or min_distance_right <= 0.05:
             collision_count = collision_count + 1
 
-        # speed_updates = speed_updates + 1
-        # speed_accumulation = speed_accumulation + twist.linear.x
-
-        # read LED data
-        #data = bus.read_i2c_block_data(0x44, 0x09, 6)
-
-        # Convert the data to green, red and blue int values
-        # green = 256*data[1] + data[0]
-        # red = 256*data[3] + data[2]
-        # blue = 256*data[5] + data[4]
-
-        # count red
-        # if red > green and red > blue:  # red
-        #     red_count = red_count + 1
-        #     rospy.loginfo('VICTIM!, new victim count : %f', red_count)
-
-        # rospy.loginfo('average speed : %f', speed_accumulation / speed_updates)
+       
         rospy.loginfo('collision count : %f', collision_count)
-        # rospy.loginfo('victim count : %f', red_count)
+        rospy.loginfo('full stop turn count : %f', full_stop_turn_count)
 
 
 def main():
