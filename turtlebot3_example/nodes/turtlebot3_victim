@@ -38,7 +38,7 @@ class Victim():
             blue = 256*data[5] + data[4]
 
             # count red
-            if red > green and red > blue:  # red
+            if red > 1.5*green and red > 1.5*blue:  # red
                 red_count = red_count + 1
                 rospy.loginfo('VICTIM!, new victim count : %f', red_count)
                 rospy.sleep(2) # prevents double counts
