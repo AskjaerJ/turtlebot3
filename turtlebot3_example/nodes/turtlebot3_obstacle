@@ -134,7 +134,7 @@ class Obstacle():
 
                 elif min_distance_center > 0.25:  # range 1
                     rospy.loginfo('Between 35 and 24')
-                    turn(min_distance_left, min_distance_right, 1.8)
+                    turn(min_distance_left, min_distance_right, 2)
                 else: # range 0
                     rospy.loginfo('Below 25')
                     twist.linear.x = 0  # stop
