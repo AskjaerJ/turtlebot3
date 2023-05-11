@@ -132,13 +132,13 @@ class Obstacle():
                     rospy.loginfo('Between 50 and 35')
                     turn(min_distance_left, min_distance_right, 0.8)
 
-                elif min_distance_center > 0.24:  # range 1
+                elif min_distance_center > 0.25:  # range 1
                     rospy.loginfo('Between 35 and 24')
-                    turn(min_distance_left, min_distance_right, 1.6)
+                    turn(min_distance_left, min_distance_right, 1.8)
                 else: # range 0
-                    rospy.loginfo('Below 23')
+                    rospy.loginfo('Below 25')
                     twist.linear.x = 0  # stop
-                    twist.angular.z = 4  # left
+                    twist.angular.z = 5  # left
                     self._cmd_pub.publish(twist)
                     full_stop_turn_count = full_stop_turn_count + 1
                     # rospy.loginfo('Turn left!')
