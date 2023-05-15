@@ -100,15 +100,7 @@ class Obstacle():
         full_stop_turn_count = 0
         twist.linear.x = LINEAR_VEL
 
-        # LED
-        # Get I2C bus
-        bus = smbus.SMBus(1)
-
-        # ISL29125 address, 0x44(68)
-        # Select configuation-1register, 0x01(01)
-        # 0x0D(13) Operation: RGB, Range: 360 lux, Res: 16 Bits
-        bus.write_byte_data(0x44, 0x01, 0x05)
-
+        
             # function for turning
         def turn(min_left, min_right, turn_value):
             if min_right < min_left:
@@ -136,7 +128,7 @@ class Obstacle():
                 elif min_distance_center > 0.25:  # range 1
                     rospy.loginfo('Between 35 and 24')
                     turn(min_distance_left, min_distance_right, 2)
-                else: # range 0
+                else:                               # range 0
                     rospy.loginfo('Below 25')
                     twist.linear.x = 0  # stop
                     twist.angular.z = 5  # left
@@ -154,13 +146,18 @@ class Obstacle():
                 # rospy.loginfo('Distance of the obstacle : %f',
                 #               min_distance_center)
 
-        # collision
-        if min_distance_center <= 0.04 or min_distance_left <= 0.05 or min_distance_right <= 0.05:
-            collision_count = collision_count + 1
+            # collision
+            if min_distance_center <= 0.04 or min_distance_left <= 0.05 or min_distance_right <= 0.05:
+                collision_count = collision_count + 1
+            
+            #average speed
+            speed_updates = speed_updates + 1
+            speed_accumulation = speed_accumulation + twist.linear.x
 
-       
+
         rospy.loginfo('collision count : %f', collision_count)
         rospy.loginfo('full stop turn count : %f', full_stop_turn_count)
+        rospy.loginfo('average speed : %f', speed_accumulation/speed_updates)
 
 
 def main():
