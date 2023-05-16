@@ -17,22 +17,29 @@ class Victim():
     def check_for_victim(self):
         # LED
         # Get I2C bus
-        bus = smbus.SMBus(1)
+        bus = smbus.SMBus(1) # /dev/i2c-1
 
         # ISL29125 address, 0x44(68)
-        # Select configuation-1register, 0x01(01)
+        # Select configuration-1register, 0x01(01)
         # 0x0D(13) Operation: RGB, Range: 360 lux, Res: 16 Bits
+        # 0x05 (page 9 documentation), sets op mode to RED/GREEN/BLUE 
         bus.write_byte_data(0x44, 0x01, 0x05)
+        
         
         red_count = 0
         
-        t_end = time.time() + 120  # time_time returns time since 1st jan 1970
+        t_end = time.time() + 120  # time_time returns seconds since 1st jan 1970
         
         while time.time() < t_end:
             # read LED data
-            data = bus.read_i2c_block_data(0x44, 0x09, 6)
+            data = bus.read_i2c_block_data(0x44, 0x09, 6) 
+            #0x44 is address of the sensor (from i2cdetect -y -1)
+            #0x09 is the first rgb register (from isl29125 datasheet, p. 9)
+            #6 means read the the next 6 registers, including 0x09
 
             # Convert the data to green, red and blue int values
+            # each color is split into two registers, one containing the lower byte, one containing the upper byte
+            # By multiplying the upper value with 256 and adding the lower value, the correct value for the color is obtained
             green = 256*data[1] + data[0]
             red = 256*data[3] + data[2]
             blue = 256*data[5] + data[4]
