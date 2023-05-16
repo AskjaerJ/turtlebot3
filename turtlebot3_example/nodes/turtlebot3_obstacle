@@ -43,8 +43,8 @@ def odometryCallback(data):
     # retrieve velocity here
     global ODOM_SUM
     global ODOM_COUNT
-    COUNT = COUNT + 1
-    SUM = SUM + data.twist.twist.linear.x
+    ODOM_COUNT = ODOM_COUNT + 1
+    ODOM_SUM = ODOM_SUM + data.twist.twist.linear.x
 
 
 class Obstacle():
