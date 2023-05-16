@@ -127,7 +127,7 @@ class Obstacle():
 
             elif MIDDLE_PERIMETER > min_distance_center > SAFE_STOP_DISTANCE:  # range 1
                 rospy.loginfo('Between %f and %f.', MIDDLE_PERIMETER, SAFE_STOP_DISTANCE)
-                turn(min_distance_left, min_distance_right, 2)
+                turn(min_distance_left, min_distance_right, 0) # 2
                 
             elif SAFE_STOP_DISTANCE > min_distance_center: # range 0
                 rospy.loginfo('Below %f', SAFE_STOP_DISTANCE)
