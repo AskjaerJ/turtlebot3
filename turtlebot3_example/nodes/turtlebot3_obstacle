@@ -142,8 +142,7 @@ class Obstacle():
                 twist.angular.z = 0.0
                 self._cmd_pub.publish(twist)
                 turtlebot_moving = True
-                # rospy.loginfo('Distance of the obstacle : %f',
-                #               min_distance_center)
+                rospy.loginfo('Distance of the obstacle : %f', min_distance_center)
 
             # collision
             if min_distance_center <= 0.04 or min_distance_left <= 0.05 or min_distance_right <= 0.05:
