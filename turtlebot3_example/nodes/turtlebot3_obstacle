@@ -33,18 +33,18 @@ SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
 
 
 # odom global variables
-SUM = 0
-COUNT = 0
+ODOM_SUM = 0
+ODOM_COUNT = 0
 
 # odom subscriber callback
 
 
 def odometryCallback(data):
     # retrieve velocity here
-    # COUNT = COUNT + 1
-    #SUM = SUM + data.twist.twist.linear.x
-    #average_linear_speed = SUM/COUNT
-    rospy.loginfo('velocity : %f', data.twist.twist.linear.x)
+    global ODOM_SUM
+    global ODOM_COUNT
+    COUNT = COUNT + 1
+    SUM = SUM + data.twist.twist.linear.x
 
 
 class Obstacle():
@@ -156,7 +156,8 @@ class Obstacle():
 
         rospy.loginfo('collision count : %f', collision_count)
         rospy.loginfo('full stop turn count : %f', full_stop_turn_count)
-        rospy.loginfo('average speed : %f', speed_accumulation/speed_updates)
+        rospy.loginfo('average velocity : %f', speed_accumulation/speed_updates)
+        rospy.loginfo('ODOM average velocity : %f', ODOM_SUM/ODOM_COUNT)
 
 
 def main():
