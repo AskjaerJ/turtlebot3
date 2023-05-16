@@ -26,10 +26,12 @@ import smbus  # led sensor
 from nav_msgs.msg import Odometry  # odom
 
 LINEAR_VEL = 0.22
-STOP_DISTANCE = 0.45
+STOP_DISTANCE = 0.20
 LIDAR_ERROR = 0.05
 ANGLE = 90
 SAFE_STOP_DISTANCE = STOP_DISTANCE + LIDAR_ERROR
+OUTER_PERIMETER = 0.50
+MIDDLE_PERIMETER = 0.35
 
 
 # odom global variables
@@ -111,31 +113,28 @@ class Obstacle():
                 self._cmd_pub.publish(twist)
                 #rospy.loginfo('Turn right!')
 
-        # runtime loopet
-        while time.time() < t_end:  # runs for X secs
+        # runtime loop
+        while time.time() < t_end:  # runs for 120 secs
             lidar_distances = self.get_scan()
-            min_distance = min(lidar_distances)
             min_distance_right = min(lidar_distances[0:29])
             min_distance_center = min(lidar_distances[30:59])
             min_distance_left = min(lidar_distances[60:89])
 
-            if min_distance_center < SAFE_STOP_DISTANCE:  # something need to be happen
-                if min_distance_center > 0.35:  #range 2
-                    rospy.loginfo('Between 50 and 35')
+            if min_distance_center < OUTER_PERIMETER:  # needs to turn
+                if min_distance_center > MIDDLE_PERIMETER:  #range 2
+                    rospy.loginfo('Between %f and %f', OUTER_PERIMETER, MIDDLE_PERIMETER)
                     turn(min_distance_left, min_distance_right, 0.8)
 
-                elif min_distance_center > 0.25:  # range 1
-                    rospy.loginfo('Between 35 and 25')
+                elif min_distance_center > SAFE_STOP_DISTANCE:  # range 1
+                    rospy.loginfo('Between %f and %f.', MIDDLE_PERIMETER, SAFE_STOP_DISTANCE)
                     turn(min_distance_left, min_distance_right, 2)
+                    
                 else:                               # range 0
-                    rospy.loginfo('Below 25')
+                    rospy.loginfo('Below %f', MIDDLE_PERIMETER)
                     twist.linear.x = 0  # stop
                     twist.angular.z = 5  # left
                     self._cmd_pub.publish(twist)
                     full_stop_turn_count = full_stop_turn_count + 1
-                    # rospy.loginfo('Turn left!')
-                    # turn(min_distance_left, min_distance_right, 3)
-                    # time.sleep(3)
 
             else:
                 twist.linear.x = LINEAR_VEL
