@@ -48,7 +48,6 @@ ODOM_COUNT = 0
 
 # odom subscriber callback
 def odometryCallback(data):
-    # retrieve velocity here
     global ODOM_SUM
     global ODOM_COUNT
     ODOM_COUNT = ODOM_COUNT + 1
@@ -136,7 +135,7 @@ class Obstacle():
                 
             elif SAFE_STOP_DISTANCE > min_distance_center: #PER0
                 rospy.loginfo('Below %f', SAFE_STOP_DISTANCE)
-                #twist.linear.x = 0  # stop
+                twist.linear.x = 0  # stop
                 twist.angular.z = MAX_TURN_VEL  # left
                 self._cmd_pub.publish(twist)
                 full_stop_turn_count = full_stop_turn_count + 1
@@ -156,7 +155,7 @@ class Obstacle():
             speed_updates = speed_updates + 1
             speed_accumulation = speed_accumulation + twist.linear.x
 
-
+        #data outs
         rospy.loginfo('collision count : %f', collision_count)
         rospy.loginfo('full stop turn count : %f', full_stop_turn_count)
         rospy.loginfo('average velocity : %f', speed_accumulation/speed_updates)
