@@ -144,7 +144,7 @@ class Obstacle():
                 twist.linear.x = MAX_LINEAR_VEL
                 twist.angular.z = 0.0
                 self._cmd_pub.publish(twist)
-                turtlebot_moving = True
+                #turtlebot_moving = True
                 rospy.loginfo('Distance of the obstacle : %f', min_distance_center)
 
             # collision
