@@ -25,7 +25,8 @@ import time  # time module
 import smbus  # led sensor
 from nav_msgs.msg import Odometry  # odom
 
-LINEAR_VEL = 0.22
+MAX_LINEAR_VEL = 0.22
+MAX_TURN_VEL = 5
 STOP_DISTANCE = 0.20
 LIDAR_ERROR = 0.05
 VIEW_ANGLE = 90
@@ -104,7 +105,7 @@ class Obstacle():
         collision_count = 0  # collision counter
         red_count = 0
         full_stop_turn_count = 0
-        twist.linear.x = LINEAR_VEL
+        twist.linear.x = MAX_LINEAR_VEL
 
     
             # function for turning
@@ -135,13 +136,13 @@ class Obstacle():
                 
             elif SAFE_STOP_DISTANCE > min_distance_center: #PER0
                 rospy.loginfo('Below %f', SAFE_STOP_DISTANCE)
-                twist.linear.x = 0  # stop
-                twist.angular.z = 5  # left
+                #twist.linear.x = 0  # stop
+                twist.angular.z = MAX_TURN_VEL  # left
                 self._cmd_pub.publish(twist)
                 full_stop_turn_count = full_stop_turn_count + 1
 
             else:
-                twist.linear.x = LINEAR_VEL
+                twist.linear.x = MAX_LINEAR_VEL
                 twist.angular.z = 0.0
                 self._cmd_pub.publish(twist)
                 turtlebot_moving = True

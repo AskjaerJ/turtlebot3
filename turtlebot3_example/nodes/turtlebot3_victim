@@ -25,12 +25,12 @@ class Victim():
         # 0x05 (page 9 documentation), sets op mode to RED/GREEN/BLUE 
         bus.write_byte_data(0x44, 0x01, 0x05)
         
-        
-        red_count = 0
+        red_count = 0 #init of red counter
         
         t_end = time.time() + 120  # time_time returns seconds since 1st jan 1970
         
-        while time.time() < t_end:
+        # 120 sec run-time loop
+        while time.time() < t_end: 
             # read LED data
             data = bus.read_i2c_block_data(0x44, 0x09, 6) 
             #0x44 is address of the sensor (from i2cdetect -y -1)
@@ -38,7 +38,7 @@ class Victim():
             #6 means read the the next 6 registers, including 0x09
 
             # Convert the data to green, red and blue int values
-            # each color is split into two registers, one containing the lower byte, one containing the upper byte
+            # each color is split into two registers in the sensors output, one containing the lower byte, one containing the upper byte
             # By multiplying the upper value with 256 and adding the lower value, the correct value for the color is obtained
             green = 256*data[1] + data[0]
             red = 256*data[3] + data[2]
@@ -49,7 +49,6 @@ class Victim():
                 red_count = red_count + 1
                 rospy.loginfo('VICTIM!, new victim count : %f', red_count)
                 rospy.sleep(2) # prevents double counts
-
 
 def main():
     rospy.init_node('turtlebot3_victim')
