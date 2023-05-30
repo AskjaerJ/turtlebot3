@@ -44,7 +44,7 @@ class Victim():
             red = 256*data[3] + data[2]
             blue = 256*data[5] + data[4]
 
-            rospy.loginfo('red %f, green %f, blue %f', red, green, blue)
+            #rospy.loginfo('red %f, green %f, blue %f', red, green, blue) #for testing
 
             # count red
             if red > 1.1*green and red > 1.1*blue:  # red
